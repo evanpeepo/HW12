@@ -70,19 +70,18 @@ coef(length_glm)
 
 #C. 
 
-predictors <- seq(min(bsb_capture_after_july$Length_at_capture), 
-                  max(bsb_capture_after_july$Length_at_capture), 
-                  length = 100
-                  )
+predictors <- data.frame(Length_at_capture = bsb_capture_after_july$Length_at_capture,
+                         Changed_sex = bsb_capture_after_july$changed_sex_binary)
 
-length_df <- data.frame(Length_at_capture = predictors)
+predicted_odds <- predict.glm(length_glm, newdata = predictors, type = 'response')
 
-predicted_odds <- predict.glm(length_glm, newdata = length_df, type = 'response')
+length_and_odds_df <- data.frame(predictors, predicted_odds)
 
-length_and_odds_df <- data.frame(length = predictors, predicted_odds)
-
-ggplot(length_and_odds_df, aes(x = length, y = predicted_odds)) +
-  geom_line() +
-  theme_minimal(base_size = 15) +
-  ylab('Pred. Odds of Sex Change') +
-  xlab('Length (mm)')
+ggplot(length_and_odds_df, aes(x = Length_at_capture)) +
+  geom_line(aes(y = predicted_odds), color = "blue") +
+  geom_point(aes(y = Changed_sex * 1), color = "black") +       
+  scale_y_continuous(
+    name = "Pred. Odds of Change",
+    sec.axis = sec_axis(~ . / 1, name = "Changed Sex (1 = Changed)")  #wasn't sure how to do this, used ChatGPT
+  ) +
+  theme_minimal(base_size = 15)
