@@ -67,9 +67,6 @@ autoplot(size_glm)
 #create predictions for data set based on the glm and add it as a new column
 female_bass$predicted <- predict(size_glm, type = "response")
 
-#created this as a dataframe so I understood what the output was here - IGNORE
-#female_bass_predicted <- data.frame(predict(size_glm, type = "response"))
-
 #plot model estimated relationship over actual dataset
 
 ggplot(female_bass, aes(x = Length_at_capture) +
@@ -82,3 +79,4 @@ ggplot(female_bass, aes(x = Length_at_capture) +
     name = "Binary Value of Change",
     sec.axis = sec_axis( trans=~.*1, name= "Modeled Probability of Change")) +
   theme_minimal
+
