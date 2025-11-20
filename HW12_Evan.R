@@ -60,9 +60,10 @@ ggplot(bsb_capture_after_july, aes(x = Length_at_capture, y = changed_sex)) +
 
 #Make GLM
 length_glm <- glm(changed_sex_binary ~ Length_at_capture, family = 'binomial', data = bsb_capture_after_july)
+#default is link = logit
 
 #A. 
-summary(length_glm) #p = .11
+summary(length_glm) #p = .11, weak / no evidence
 coef(length_glm)
 
 #B. 
