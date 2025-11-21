@@ -69,16 +69,26 @@ autoplot(size_glm)
 #create predictions for data set based on the glm and add it as a new column
 female_bass$predicted <- predict(size_glm, type = "response")
 
+
 #plot model estimated relationship over actual dataset
 
 ggplot(female_bass, aes(x = Length_at_capture)) +
-  geom_jitter(aes(y = binary, color = "Actual Data"), height = 0.05, alpha = 0.4) +
-  geom_line(aes(y = predicted, color = "Modeled Probability"), linewidth = 1.2) +
+  geom_jitter(aes(y = binary, color = "Actual Data"),
+              height = 0.05, alpha = 0.4) +
+  geom_line(aes(y = predicted, color = "Modeled Probability"),
+            linewidth = 1.2) +
   scale_color_manual(name = "Data source",
-                     values = c("Actual Data" = "blue", 
-                                "Modeled Probability" = "green"))+
+                     values = c("Actual Data" = "blue",
+                                "Modeled Probability" = "green")) +
   scale_y_continuous(
     name = "Binary Value of Change",
-    sec.axis = sec_axis( trans=~.*1, name= "Modeled Probability of Change")) +
-  theme_minimal()
-
+    sec.axis = sec_axis(trans = ~ .* 1,
+                        name = "Modeled Probability of Change")) +
+  labs(
+    x = "Length at Capture",
+    caption = "Figure 1. Actual sex change outcomes and modeled probability of sex change by length."
+  ) +
+  theme_minimal() +
+  theme(
+    plot.caption = element_text(hjust = 0, size = 10)  #left-align
+  )
