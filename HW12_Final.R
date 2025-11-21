@@ -47,6 +47,7 @@ ci_95 <- qbeta(c(0.025, 0.975), alpha, beta)
 ci_95
 abline(v = ci_95, col = "purple", lwd = 2, lty = 2)
 
+#### The 95% confidence interval is (0.17, 0.49) ##################################
 
 # Objective 2 #
 
@@ -61,6 +62,7 @@ autoplot(size_glm)
 #B. By how much is the log odds of sex change predicted to change for every millimeter increase in length?
 ### ANSWER: If I am understanding this correctly, the coefficient intercept of the GLM indicates the log odds - so it would be -14.37 and the pvalue of it is 0.0941 (which is not statistically significant)
 
+# The log odds of sex change predicted per mm increase in length is 0.045, which is the slope of the glm model.
 
 #C. Plot the relationship between the probability of sex change for these individuals and length. Overlay the model estimated relationship on the data. Label axes appropriately and provide a figure caption. Relevant functions: predict.glm(), ggplot2()
 
@@ -69,7 +71,7 @@ female_bass$predicted <- predict(size_glm, type = "response")
 
 #plot model estimated relationship over actual dataset
 
-ggplot(female_bass, aes(x = Length_at_capture) +
+ggplot(female_bass, aes(x = Length_at_capture)) +
   geom_jitter(aes(y = binary, color = "Actual Data"), height = 0.05, alpha = 0.4) +
   geom_line(aes(y = predicted, color = "Modeled Probability"), linewidth = 1.2) +
   scale_color_manual(name = "Data source",
@@ -78,5 +80,5 @@ ggplot(female_bass, aes(x = Length_at_capture) +
   scale_y_continuous(
     name = "Binary Value of Change",
     sec.axis = sec_axis( trans=~.*1, name= "Modeled Probability of Change")) +
-  theme_minimal
+  theme_minimal()
 
