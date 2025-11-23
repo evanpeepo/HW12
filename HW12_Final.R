@@ -4,7 +4,7 @@ library(dplyr)
 library(ggplot2)
 library(ggfortify)
 
-# read iggplot2# read in excel file
+# read in excel file
 bass_data <- read_excel("BSB_tagging_data.xlsx")
 View(bass_data)
 
@@ -56,12 +56,11 @@ size_glm <- glm(binary ~ Length_at_capture, data = female_bass, family = binomia
 summary(size_glm)
 
 autoplot(size_glm)
+coef(size_glm)
 
 ### ANSWER: The p-value of this glm is 0.112 which indicates that there is no statistically significant relationship between the size (length at capture) of female bass and probability of a sex change.
 
 #B. By how much is the log odds of sex change predicted to change for every millimeter increase in length?
-### ANSWER: If I am understanding this correctly, the coefficient intercept of the GLM indicates the log odds - so it would be -14.37 and the pvalue of it is 0.0941 (which is not statistically significant)
-
 # The log odds of sex change predicted per mm increase in length is 0.045, which is the slope of the glm model.
 
 #C. Plot the relationship between the probability of sex change for these individuals and length. Overlay the model estimated relationship on the data. Label axes appropriately and provide a figure caption. Relevant functions: predict.glm(), ggplot2()
